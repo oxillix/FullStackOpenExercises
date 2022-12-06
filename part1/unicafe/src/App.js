@@ -22,19 +22,27 @@ const Statistics = (props) => {
   const avgArray = (arr) => (arr[0] - arr[2]) / sumArray(arr)
   const positiveInArray = (arr) => (arr[0] / sumArray(arr)) * 100 + " %"
 
-  return (
-    <div>
-      <Header value="statistics" />
-
-      <Content text="good" value={good} />
-      <Content text="neutral" value={neutral} />
-      <Content text="bad" value={bad} />
-
-      <Content text="all" value={sumArray(feedback)} />
-      <Content text="average" value={avgArray(feedback)} />
-      <Content text="positive" value={positiveInArray(feedback)} />
-    </div>
-  )
+  if (sumArray(feedback) === 0) {
+    return (
+      <div>
+        <Header value="statistics" />
+        <p>No feedback given</p>
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        <Header value="statistics" />
+        <Content text="good" value={good} />
+        <Content text="neutral" value={neutral} />
+        <Content text="bad" value={bad} />
+  
+        <Content text="all" value={sumArray(feedback)} />
+        <Content text="average" value={avgArray(feedback)} />
+        <Content text="positive" value={positiveInArray(feedback)} />
+      </div>
+    )
+  }
 }
 
 const Button = (props) => (
