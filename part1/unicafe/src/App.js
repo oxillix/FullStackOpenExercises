@@ -5,10 +5,10 @@ const Header = props => <h1>{props.value}</h1>
 
 const StatisticLine = props => {
   return (
-    <>
-      <span>{props.text} {props.value}</span>
-      <br/>
-    </>
+    <tr>
+      <td>{props.text}</td>
+      <td>{props.value}</td>
+    </tr>
   )
 }
 
@@ -34,13 +34,17 @@ const Statistics = (props) => {
     return (
       <div>
         <Header value="statistics" />
-        <StatisticLine text="good" value={good} />
-        <StatisticLine text="neutral" value={neutral} />
-        <StatisticLine text="bad" value={bad} />
-  
-        <StatisticLine text="all" value={sumArray(feedback)} />
-        <StatisticLine text="average" value={avgArray(feedback)} />
-        <StatisticLine text="positive" value={positiveInArray(feedback)} />
+        
+        <table>
+          <tbody>
+            <StatisticLine text="good" value={good} />
+            <StatisticLine text="neutral" value={neutral} />
+            <StatisticLine text="bad" value={bad} />
+            <StatisticLine text="all" value={sumArray(feedback)} />
+            <StatisticLine text="average" value={avgArray(feedback)} />
+            <StatisticLine text="positive" value={positiveInArray(feedback)} />
+          </tbody>
+        </table>
       </div>
     )
   }
