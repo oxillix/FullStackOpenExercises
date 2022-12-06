@@ -2,7 +2,8 @@ import { useState } from 'react'
 
 
 const Header = props => <h1>{props.value}</h1>
-const Content = props => {
+
+const StatisticLine = props => {
   return (
     <>
       <span>{props.text} {props.value}</span>
@@ -33,13 +34,13 @@ const Statistics = (props) => {
     return (
       <div>
         <Header value="statistics" />
-        <Content text="good" value={good} />
-        <Content text="neutral" value={neutral} />
-        <Content text="bad" value={bad} />
+        <StatisticLine text="good" value={good} />
+        <StatisticLine text="neutral" value={neutral} />
+        <StatisticLine text="bad" value={bad} />
   
-        <Content text="all" value={sumArray(feedback)} />
-        <Content text="average" value={avgArray(feedback)} />
-        <Content text="positive" value={positiveInArray(feedback)} />
+        <StatisticLine text="all" value={sumArray(feedback)} />
+        <StatisticLine text="average" value={avgArray(feedback)} />
+        <StatisticLine text="positive" value={positiveInArray(feedback)} />
       </div>
     )
   }
