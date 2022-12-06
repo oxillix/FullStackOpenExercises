@@ -10,6 +10,8 @@ const VoteCount = (props) => (
   <p>has {props.votes} votes</p>
 )
 
+const Header = props => <h1>{props.value}</h1>
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -25,6 +27,8 @@ const App = () => {
   const [points, setPoints] = useState(Array(anecdotes.length).fill(0))
 
   const getRandomAnecdote = () => Math.floor(Math.random() * anecdotes.length)
+  const getMostVotedAnecdote = () => points.indexOf(Math.max(...points))
+
   const incrementPoints = (i) => {
     const pointsCopy = [...points]
     pointsCopy[i] += 1
@@ -33,11 +37,15 @@ const App = () => {
 
   return (
     <div>
+      <Header value="Anecdote of the day" />
       {anecdotes[selected]}
       <br />
       <VoteCount votes={points[selected]} />
       <Button handleClick={() => incrementPoints(selected)} text="vote" />
       <Button handleClick={() => setSelected(getRandomAnecdote())} text="next anecdote" />
+
+      <Header value="Anecdote with most votes" />
+      {anecdotes[getMostVotedAnecdote()]}
     </div>
   )
 }
