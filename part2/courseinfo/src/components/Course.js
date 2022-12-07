@@ -3,8 +3,11 @@ import Header from "./Header";
 import Total from "./Total";
 
 const getSumOfExercises = (parts) => {
-  return parts.reduce((sum, part) => sum + part.exercises, 0);
-}
+  return parts.reduce((sum, part) => {
+    console.log("What is happening", sum, part)
+    return sum + part.exercises;
+  }, 0);
+};
 
 const Course = ({ course }) => {
   return (
