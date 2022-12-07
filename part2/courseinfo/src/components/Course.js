@@ -4,7 +4,7 @@ import Total from "./Total";
 
 const getSumOfExercises = (parts) => {
   return parts.reduce((sum, part) => {
-    console.log("What is happening", sum, part)
+    //console.log("What is happening", sum, part)
     return sum + part.exercises;
   }, 0);
 };
