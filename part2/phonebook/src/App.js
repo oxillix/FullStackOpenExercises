@@ -7,6 +7,14 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault();
+
+    if (
+      persons
+        .map((person) => person.name.toLowerCase())
+        .includes(newName.toLowerCase())
+    )
+      return alert(`${newName} is already added to phonebook`);
+
     const personObject = {
       name: newName,
       // This method works for our application since notes are never deleted
