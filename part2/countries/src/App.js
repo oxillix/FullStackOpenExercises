@@ -7,28 +7,6 @@ const App = () => {
   const [countries, setCountries] = useState([]);
   const [searchInput, setsearchInput] = useState("");
 
-  // const addPerson = (event) => {
-  //   event.preventDefault();
-
-  //   if (
-  //     count
-  //       .map((person) => person.name.toLowerCase())
-  //       .includes(newName.toLowerCase())
-  //   )
-  //     return alert(`${newName} is already added to phonebook`);
-
-  //   const personObject = {
-  //     name: newName,
-  //     number: newNumber,
-  //     // This method works for our application since notes are never deleted
-  //     id: newName,
-  //   };
-
-  //   setPersons(persons.concat(personObject));
-  //   setNewName("");
-  //   setNewNumber("");
-  // };
-
   const handlesearchInput = (event) => {
     console.log(event.target.value);
     setsearchInput(event.target.value);
