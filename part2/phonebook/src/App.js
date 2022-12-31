@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import AddPersonForm from "./components/AddPersonForm";
-import Contact from "./components/Contact";
 import FilterPerson from "./components/FilterPerson";
 import Persons from "./components/Persons";
 
