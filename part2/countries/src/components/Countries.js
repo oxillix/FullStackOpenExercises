@@ -1,9 +1,31 @@
+import { useState } from "react";
 import CountryDetail from "./CountryDetail";
 
 const Countries = ({ countries, searchInput }) => {
+  const [selectedCountries, setSelectedCountries] = useState([]);
+
   const filteredCountries = countries.filter((countries) =>
     countries.name.common.toLowerCase().includes(searchInput)
   );
+
+  const buttonClickHandler = (country) => () => {
+    if (selectedCountries.includes(country.cca2) === true) {
+      console.log(
+        selectedCountries.filter(
+          (selectedCountry) => selectedCountry !== country.cca2
+        )
+      );
+      setSelectedCountries(
+        selectedCountries.filter(
+          (selectedCountry) => selectedCountry !== country.cca2
+        )
+      );
+    } else {
+      setSelectedCountries([...selectedCountries, country.cca2]);
+    }
+  };
+
+  console.log(selectedCountries);
 
   let countryView = () => {
     if (filteredCountries.length > 10) {
@@ -14,9 +36,16 @@ const Countries = ({ countries, searchInput }) => {
     ) {
       return (
         <ul>
-          {filteredCountries.map((country) => ((
-            <li key={country.cca2}>{country.name.common}</li>
-          )))}
+          {filteredCountries.map((country) => (
+            <li key={country.cca2}>
+              {country.name.common}
+              <button onClick={buttonClickHandler(country)}>show</button>
+
+              {selectedCountries.includes(country.cca2) === true && (
+                <CountryDetail country={country} />
+              )}
+            </li>
+          ))}
         </ul>
       );
     } else if (filteredCountries.length === 1) {
