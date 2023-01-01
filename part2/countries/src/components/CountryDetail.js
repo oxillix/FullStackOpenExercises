@@ -1,3 +1,7 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import Weather from "./Weather";
+
 const CountryDetail = ({ country }) => {
   return (
     <div>
@@ -16,6 +20,8 @@ const CountryDetail = ({ country }) => {
       </ul>
 
       <img src={country.flags.png} alt="flag" width="200" height="200" />
+
+      <Weather country={country} />
     </div>
   );
 };
