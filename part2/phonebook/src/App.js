@@ -17,19 +17,39 @@ const App = () => {
       persons
         .map((person) => person.name.toLowerCase())
         .includes(newName.toLowerCase())
-    )
-      return alert(`${newName} is already added to phonebook`);
+    ) {
+      const person = persons.filter(
+        (person) => person.name.toLowerCase() === newName.toLowerCase()
+      )[0];
 
-    const personObject = {
-      name: newName,
-      number: newNumber,
-    };
+      if (
+        window.confirm(
+          `${person.name} is already added to the phonebook, replace the old number with a new one?`
+        )
+      ) {
+        const updatedPerson = { ...person, number: newNumber };
+        personService
+          .update(updatedPerson.id, updatedPerson)
+          .then((returnedPerson) => {
+            setPersons(
+              persons.map((person) =>
+                person.id !== updatedPerson.id ? person : returnedPerson
+              )
+            );
+          });
+      }
+    } else {
+      const personObject = {
+        name: newName,
+        number: newNumber,
+      };
 
-    personService.create(personObject).then((returnedPerson) => {
-      setPersons(persons.concat(returnedPerson));
-      setNewName("");
-      setNewNumber("");
-    });
+      personService.create(personObject).then((returnedPerson) => {
+        setPersons(persons.concat(returnedPerson));
+        setNewName("");
+        setNewNumber("");
+      });
+    }
   };
 
   const handleNameChange = (event) => {
