@@ -23,13 +23,15 @@ const App = () => {
     const personObject = {
       name: newName,
       number: newNumber,
-      // This method works for our application since notes are never deleted
-      id: newName,
     };
 
-    setPersons(persons.concat(personObject));
-    setNewName("");
-    setNewNumber("");
+    axios
+    .post('http://localhost:3001/persons', personObject)
+    .then(response => {
+      setPersons(persons.concat(personObject));
+      setNewName("");
+      setNewNumber("");
+    })
   };
 
   const handleNameChange = (event) => {
