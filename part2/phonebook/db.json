@@ -1,24 +1,14 @@
 {
   "persons": [
     {
-      "name": "Ada Lovelace",
-      "number": "36377887383",
-      "id": 2
-    },
-    {
       "name": "Arto Hellas",
-      "number": "34353425235",
+      "number": "3433434345345",
       "id": 3
     },
     {
       "name": "Juha Tauriainen",
       "number": "82342525262",
       "id": 4
-    },
-    {
-      "name": "Joost devos",
-      "number": "5255262626",
-      "id": 5
     }
   ]
 }

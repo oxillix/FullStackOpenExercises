@@ -10,7 +10,8 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [searchInput, setsearchInput] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("Error");
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -30,6 +31,7 @@ const App = () => {
         )
       ) {
         const updatedPerson = { ...person, number: newNumber };
+        
         personService
           .update(updatedPerson.id, updatedPerson)
           .then((returnedPerson) => {
@@ -39,10 +41,21 @@ const App = () => {
               )
             );
 
-            setSuccessMessage(`Successfully updated ${updatedPerson.name}`);
+            setMessageType("Success");
+            setMessage(`Successfully updated ${updatedPerson.name}`);
             setTimeout(() => {
-              setSuccessMessage("");
+              setMessage("");
             }, 5000);
+          })
+          .catch((error) => {
+            setMessageType("Error");
+            setMessage(
+              `Information of ${updatedPerson.name} has already been removed from server`
+            );
+            setTimeout(() => {
+              setMessage("");
+            }, 5000);
+            setPersons(persons.filter((p) => p.id !== updatedPerson.id));
           });
       }
     } else {
@@ -56,9 +69,10 @@ const App = () => {
         setNewName("");
         setNewNumber("");
 
-        setSuccessMessage(`Added ${returnedPerson.name}`);
+        setMessageType("Success");
+        setMessage(`Added ${returnedPerson.name}`);
         setTimeout(() => {
-          setSuccessMessage("");
+          setMessage("");
         }, 5000);
       });
     }
@@ -90,7 +104,7 @@ const App = () => {
       <div>debug: {newName}</div>
 
       <h2>Phonebook</h2>
-      <Notification message={successMessage} />
+      <Notification message={message} type={messageType} />
 
       <FilterPerson
         handlesearchInput={handlesearchInput}
