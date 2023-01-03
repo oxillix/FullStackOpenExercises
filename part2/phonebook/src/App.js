@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import AddPersonForm from "./components/AddPersonForm";
 import FilterPerson from "./components/FilterPerson";
+import Notification from "./components/Notification";
 import Persons from "./components/Persons";
 import personService from "./services/persons";
 
@@ -9,6 +10,7 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [searchInput, setsearchInput] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -36,6 +38,11 @@ const App = () => {
                 person.id !== updatedPerson.id ? person : returnedPerson
               )
             );
+
+            setSuccessMessage(`Successfully updated ${updatedPerson.name}`);
+            setTimeout(() => {
+              setSuccessMessage("");
+            }, 5000);
           });
       }
     } else {
@@ -48,6 +55,11 @@ const App = () => {
         setPersons(persons.concat(returnedPerson));
         setNewName("");
         setNewNumber("");
+
+        setSuccessMessage(`Added ${returnedPerson.name}`);
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 5000);
       });
     }
   };
@@ -78,6 +90,8 @@ const App = () => {
       <div>debug: {newName}</div>
 
       <h2>Phonebook</h2>
+      <Notification message={successMessage} />
+
       <FilterPerson
         handlesearchInput={handlesearchInput}
         searchInput={searchInput}
