@@ -90,3 +90,13 @@ describe("author with most blogposts, amount", () => {
     });
   });
 });
+
+describe("author with most liked blogposts, likes amount", () => {
+  test("mostLikes returns the author, whose blog posts have the largest amount of likes. The return value also contains the total number of likes that the author has received:", () => {
+    const result = listHelper.mostLikes(blogs);
+    expect(result).toEqual({
+      author: "Edsger W. Dijkstra",
+      likes: 17,
+    });
+  });
+});
