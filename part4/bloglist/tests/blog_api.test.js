@@ -40,7 +40,7 @@ test("the unique identifier property of the blog posts is named id", async () =>
   expect(blog.id).toBeDefined();
 });
 
-test("a valid blog can be added ", async () => {
+test("a valid blog can be added", async () => {
   const newBlog = {
     title: "New blog post",
     author: "Nicolas Arnouts",
@@ -59,6 +59,25 @@ test("a valid blog can be added ", async () => {
 
   const titles = blogsAtEnd.map((b) => b.title);
   expect(titles).toContain("New blog post");
+});
+
+test("if the likes property is missing from the request, it will default to the value 0", async () => {
+  const newBlog = {
+    title: "Blog post without likes",
+    author: "Nicolas Arnouts",
+    url: "https://nicolasarnouts.be",
+  };
+
+  await api
+    .post("/api/blogs")
+    .send(newBlog)
+    .expect(201)
+    .expect("Content-Type", /application\/json/);
+
+  const blogsAtEnd = await helper.blogsInDb();
+  const blog = blogsAtEnd.filter((b) => b.title === "Blog post without likes")[0];
+
+  expect(blog.likes).toEqual(0);
 });
 
 afterAll(() => {
