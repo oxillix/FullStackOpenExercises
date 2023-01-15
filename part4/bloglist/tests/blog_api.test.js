@@ -75,9 +75,33 @@ test("if the likes property is missing from the request, it will default to the 
     .expect("Content-Type", /application\/json/);
 
   const blogsAtEnd = await helper.blogsInDb();
-  const blog = blogsAtEnd.filter((b) => b.title === "Blog post without likes")[0];
+  const blog = blogsAtEnd.filter(
+    (b) => b.title === "Blog post without likes"
+  )[0];
 
   expect(blog.likes).toEqual(0);
+});
+
+test("if the title or url properties are missing from the request data, backend responds with 400", async () => {
+  const newBlogNoUrl = {
+    title: "Blog post without likes",
+    author: "Nicolas Arnouts",
+  };
+
+  const newBlogNoTitle = {
+    author: "Nicolas Arnouts",
+    url: "https://nicolasarnouts.be",
+  };
+
+  // check newBlogNoUrl
+  await api.post("/api/blogs").send(newBlogNoUrl).expect(400);
+
+  // check newBlogNoTitle
+  await api.post("/api/blogs").send(newBlogNoTitle).expect(400);
+
+  const blogsAtEnd = await helper.blogsInDb();
+
+  expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length);
 });
 
 afterAll(() => {
