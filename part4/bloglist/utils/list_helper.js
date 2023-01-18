@@ -8,8 +8,8 @@ const totalLikes = (blogs) => {
   return blogs.length === 0
     ? 0
     : blogs
-        .map((blog) => blog.likes)
-        .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+      .map((blog) => blog.likes)
+      .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 };
 
 const favoriteBlog = (blogs) => {
