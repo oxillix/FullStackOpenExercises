@@ -120,6 +120,47 @@ describe("when there is initially some blogs saved", () => {
         expect(titles).not.toContain(blogToDelete.title);
       });
     });
+
+    describe("updating a blog", () => {
+      test("updating a blog returns the blog with updated values, status 200", async () => {
+        const blogsAtStart = await helper.blogsInDb();
+        const blogToUpdate = blogsAtStart[1];
+
+        const updatedBlog = {
+          title: "This is an updated title",
+          author: "This is an updated author",
+          url: "this is an updated url",
+          likes: 7,
+        };
+
+        const result = await api
+          .put(`/api/blogs/${blogToUpdate.id}`)
+          .send(updatedBlog)
+          .expect(200);
+
+        // console.log(`result.body: ${JSON.stringify(result.body)}`);
+        // console.log(`blogToUpdate: ${JSON.stringify(blogToUpdate)}`);
+        // console.log(`updatedBlog: ${JSON.stringify(updatedBlog)}`);
+
+        // console.log(
+        //   `the blog to compare to: ${JSON.stringify({
+        //     ...blogToUpdate,
+        //     ...updatedBlog,
+        //   })}`
+        // );
+
+        // returned blog equals updated blog
+        expect(result.body).toEqual({ ...blogToUpdate, ...updatedBlog });
+
+        const blogsAtEnd = await helper.blogsInDb();
+
+        const atEndUpdatedBlog = blogsAtEnd.filter(
+          (blog) => blog.id === blogToUpdate.id
+        )[0];
+
+        expect(atEndUpdatedBlog).toEqual({ ...blogToUpdate, ...updatedBlog });
+      });
+    });
   });
 });
 
