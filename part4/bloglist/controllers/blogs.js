@@ -32,9 +32,30 @@ blogsRouter.post("/", async (request, response) => {
 });
 
 blogsRouter.delete("/:id", async (request, response) => {
-  // if title or url is missing in the body, abort save
-  await Blog.findByIdAndRemove(request.params.id);
-  response.status(204).end();
+  const blogID = request.params.id;
+
+  // if user is not authenticated, abort delete
+  const decodedToken = jwt.verify(request.token, process.env.SECRET);
+  if (!decodedToken.id) {
+    return response.status(401).json({ error: "token invalid" });
+  }
+
+  const user = await User.findById(decodedToken.id);
+  const userBlogs_ContainsBlogID = user.blogs.find(
+    (blog) => blog.toString() === blogID
+  );
+
+  if (!userBlogs_ContainsBlogID) {
+    return response
+      .status(403)
+      .json({ error: "User has no permission to delete this blog" });
+  }
+
+  await Blog.findByIdAndRemove(blogID);
+  response
+    .status(204)
+    .json({ success: "Successfully deleted this blog." })
+    .end();
 });
 
 blogsRouter.put("/:id", async (request, response) => {
