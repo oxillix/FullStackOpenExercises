@@ -21,7 +21,7 @@ usersRouter.post("/", async (request, response) => {
     });
   }
 
-  if (checkUserExists(username)) {
+  if (await checkUserExists(username)) {
     return response.status(400).json({
       error: "The username must be unique.",
     });
@@ -42,7 +42,7 @@ usersRouter.post("/", async (request, response) => {
 });
 
 usersRouter.get("/", async (request, response) => {
-  const users = await User.find({});
+  const users = await User.find({}).populate("blogs", '-likes -user');
   response.json(users);
 });
 

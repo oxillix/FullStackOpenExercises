@@ -3,7 +3,7 @@ content-type: application/json
 
 {
     "title": "sample",
-    "author": "Wed, 21 Oct 2015 18:27:50 GMT",
+    "author": "joost",
     "url": "https://google.com",
     "likes": 12
 }
